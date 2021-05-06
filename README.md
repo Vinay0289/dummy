@@ -1,2 +1,0 @@
-# PolllobeApi
-# Read me file
