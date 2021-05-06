@@ -1,0 +1,16 @@
+{% extends 'admin/change_list.html' %}
+
+{% block object-tools %}
+{%  if title == "Select sub category to change" %}
+    <a href="import-csv/">Import CSV</a>  &nbsp;
+    <a href="download-csv/">Download CSV Format</a> &nbsp;
+     <a href="download-listdata/">Download All Data</a>
+    <br />
+{% comment %} {% elif title == "Select product price to change"  %}
+    <a href="import-csv/">Import CSV</a>  &nbsp;
+    <a href="download-csv/">Download CSV Format</a> &nbsp;
+     <a href="download-listdata/">Download All Data</a>
+    <br /> {% endcomment %}
+{% endif %}
+    {{ block.super }}
+{% endblock %}

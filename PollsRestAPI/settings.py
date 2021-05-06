@@ -25,7 +25,7 @@ SECRET_KEY = ')2cu@z10w4c-3r9!bi%7!n5l(+oa6349$q))&n6_8v=gn0$uow'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['13.67.92.64','pollobe-app.southeastasia.cloudapp.azure.com']
 
 
 # Application definition
@@ -64,7 +64,7 @@ ROOT_URLCONF = 'PollsRestAPI.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,"templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -147,3 +147,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#added manually
+STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
+MEDIA_URL="/media/"
+MEDIA_ROOT =os.path.join(BASE_DIR,'media')
