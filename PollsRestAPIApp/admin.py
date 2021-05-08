@@ -178,7 +178,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 class Polls(admin.ModelAdmin):
     inlines = [InLinePollOptions]
-    list_display = ['id','Category','SubCategory','title','description','slug','isMultipleType','isActive','createdDate','modifiedDate'] 
+    list_display = ['id','Category','SubCategory','title','description','slug','TargetedIndustry','QuestionPointingTo','isMultipleType','isActive','createdDate','modifiedDate']
     list_display_links = ['id']
     list_editable = ['isActive']
 

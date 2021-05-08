@@ -39,6 +39,8 @@ class Poll(models.Model):
     title=models.CharField(max_length=100)
     description=models.CharField(max_length=255)
     slug=models.SlugField()
+    TargetedIndustry = models.TextField(null=True,blank=True)
+    QuestionPointingTo = models.TextField(null=True,blank=True)
     isMultipleType=models.BooleanField(default=False)
     isActive=models.BooleanField(default=True)
     createdDate=models.DateTimeField(auto_now_add=True)
