@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category,SubCategory,Poll,PollOption,PollResult
+from .models import Category,SubCategory,Poll,PollOption,PollResult,TargetedIndustry,PointingTo
 from django.urls import path
 from django import forms
 from django.contrib import messages
@@ -9,6 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.safestring import mark_safe
 from django.shortcuts import render,redirect
 from django.db import connection,transaction
+
 admin.site.site_header = "Pollobe"
 admin.site.site_title = "Welecome to Pollobe"
 admin.site.index_title = "Welecome to Pollobe"
@@ -23,6 +24,18 @@ class CsvImportForm(forms.Form):
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['id','Title','Description','IsActive']
+    list_filter = ['IsActive',]
+    search_fields = ['Title']
+
+
+class TargetedIndustryAdmin(admin.ModelAdmin):
+    list_display = ['id','Title','Description','IsActive']
+    list_filter = ['IsActive',]
+    search_fields = ['Title']
+
+    
+class PointingToAdmin(admin.ModelAdmin):
     list_display = ['id','Title','Description','IsActive']
     list_filter = ['IsActive',]
     search_fields = ['Title']
@@ -178,7 +191,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 class Polls(admin.ModelAdmin):
     inlines = [InLinePollOptions]
-    list_display = ['id','Category','SubCategory','title','description','slug','TargetedIndustry','QuestionPointingTo','isMultipleType','isActive','createdDate','modifiedDate']
+    list_display = ['id','Category','SubCategory','title','description','slug','isMultipleType','isActive','createdDate','modifiedDate'] 
     list_display_links = ['id']
     list_editable = ['isActive']
 
@@ -191,8 +204,9 @@ class PollResultAdmin(admin.ModelAdmin):
     list_display = ['id','poll','polloptions','user','otherDescription']
 
 
-
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(SubCategory,SubCategoryAdmin)
+admin.site.register(TargetedIndustry,TargetedIndustryAdmin)
+admin.site.register(PointingTo,PointingToAdmin)
 admin.site.register(Poll,Polls)
 admin.site.register(PollResult,PollResultAdmin)

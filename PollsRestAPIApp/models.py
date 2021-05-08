@@ -16,6 +16,29 @@ class Category(models.Model):
     def __str__(self):
         return self.Title
 
+class TargetedIndustry(models.Model):
+    Title=models.CharField(max_length=500)
+    Description= models.TextField(null=True,blank=True)
+    slug=models.SlugField()
+    IsActive=models.BooleanField(default=True)
+    CreatedDate=models.DateTimeField(auto_now_add=True)
+    ModifiedDate=models.DateTimeField(auto_now=True )
+    class Meta:
+        verbose_name_plural = 'Targeted Industries'
+    def __str__(self):
+        return self.Title
+
+class PointingTo(models.Model):
+    Title=models.CharField(max_length=500)
+    Description= models.TextField(null=True,blank=True)
+    slug=models.SlugField()
+    IsActive=models.BooleanField(default=True)
+    CreatedDate=models.DateTimeField(auto_now_add=True)
+    ModifiedDate=models.DateTimeField(auto_now=True )
+    class Meta:
+        verbose_name_plural = 'Pointing To'
+    def __str__(self):
+        return self.Title
 
 class SubCategory(models.Model):
     #parent=models.ForeignKey('self',blank=True,null=True,related_name='children',on_delete=models.CASCADE)
@@ -39,8 +62,9 @@ class Poll(models.Model):
     title=models.CharField(max_length=100)
     description=models.CharField(max_length=255)
     slug=models.SlugField()
-    TargetedIndustry = models.TextField(null=True,blank=True)
-    QuestionPointingTo = models.TextField(null=True,blank=True)
+    TargetedIndustry = models.ManyToManyField(TargetedIndustry, related_name='poll_targetindustry')
+    PointingTo = models.ManyToManyField(PointingTo, related_name='poll_pointingto')
+    #QuestionPointingTo = models.TextField(null=True,blank=True)
     isMultipleType=models.BooleanField(default=False)
     isActive=models.BooleanField(default=True)
     createdDate=models.DateTimeField(auto_now_add=True)
