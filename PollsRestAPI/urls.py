@@ -20,11 +20,14 @@ from PollsRestAPIApp.views import RegistrationAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf.urls.static import static
 from django.conf import settings
+from PollsRestAPIApp import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/',include('PollsRestAPIApp.urls')),
+    path('getSubcategory/',views.get_subcategory),
+    path('getPollOptions/',views.get_PollOptions),
     path('auth/register/', RegistrationAPIView.as_view(), name='register'),
     path('auth/login/', TokenObtainPairView.as_view(), name='login'),
     path('auth/refresh-token', TokenRefreshView.as_view(), name='refreshtoken') ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

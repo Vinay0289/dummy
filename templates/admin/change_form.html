@@ -1,0 +1,78 @@
+{% extends "admin/change_form.html" %} {% load static %} {% block extrahead %}
+{{ block.super }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    debugger;
+// inspect html to check id of category select dropdown.
+$(document).on("change", "select#id_Category", function () {
+$.getJSON("/getSubcategory/", { id: $(this).val() }, function (j) {
+var options = '<option value="">---------</option>';
+for (var i = 0; i < j.length; i++) {
+options +=
+'<option value="' + j[i].id + '">' + j[i].Title + "</option>";
+}
+// inspect html to check id of subcategory select dropdown.
+$("select#id_SubCategory").html(options);
+});
+});
+
+$(document).on("change", "select#id_pollbranching_set-0-ParentPoll", function () {
+$.getJSON("/getPollOptions/", { id: $(this).val() }, function (j) {
+var options = '<option value="">---------</option>';
+for (var i = 0; i < j.length; i++) {
+options +=
+'<option value="' + j[i].id + '">' + j[i].optionDescription + "</option>";
+}
+// inspect html to check id of subcategory select dropdown.
+$("select#id_pollbranching_set-0-ParentPollOption").html(options);
+}); 
+});
+
+
+var frm = $('form');
+var chosenBtn = frm.find('[name="_save"]');
+var btns = frm.find('[name="_save"], [name="_addanother"], [name="_continue"]');
+btns.unbind('click.btnAssign').bind('click.btnAssign', function(e)
+{
+    chosenBtn = $(this);
+});
+frm.unbind('submit.saveStuff').bind('submit.saveStuff', function(e)
+{
+   
+   $('input[name="pollbranching_set-0-IsBranch"]:checked').each(function() {
+   //console.log(this.value);
+   if ($('#id_pollbranching_set-0-ParentPoll').val()=="" && $('#id_pollbranching_set-0-ParentPollOption').val()=="" )
+   {
+       alert("Please Select Parent Poll and Parent Poll Options");
+       e.preventDefault();
+   }
+   else  if ($('#id_pollbranching_set-0-ParentPoll').val()==""  )
+   {
+       alert("Please Select Parent Poll");
+       e.preventDefault();
+   }
+   else  if ( $('#id_pollbranching_set-0-ParentPollOption').val()=="" )
+   {
+       alert("Please Select  Parent Poll Options");
+       e.preventDefault();
+   }
+   
+   });
+    // Add your own validation here. If the validation fails, you can call:
+    // e.preventDefault();
+    // But if it works, no need for that line. If everything works...
+
+   // frm.append(
+    //[
+     //   '<input type="hidden" name="',
+       // chosenBtn.attr('name'),
+       // '" value="',
+      //  chosenBtn.attr('value'), // or maybe chosenBtn.text()
+       // '" />'
+    //].join(''));
+});
+
+});
+</script>
+{% endblock %}

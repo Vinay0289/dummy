@@ -95,3 +95,13 @@ class PollResult(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+
+class PollBranching(models.Model):
+    Poll =models.ForeignKey(Poll, on_delete=models.CASCADE)
+    IsBranch = models.BooleanField(default=True)
+    ParentPoll = models.ForeignKey('PollsRestAPIApp.Poll',related_name='ParentPoll', null=True,blank=True, on_delete=models.CASCADE)
+    ParentPollOption = models.ForeignKey('PollsRestAPIApp.PollOption', related_name='ParentPollOptions',null=True,blank=True, on_delete=models.CASCADE)
+
+

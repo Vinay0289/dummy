@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import serializers
 import uuid
+from django.http import HttpResponse
+import json
+
 # Create your views here.
 
 class RegistrationAPIView(generics.GenericAPIView):
@@ -91,3 +94,19 @@ class DetailPollResult(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = PollResult.objects.all()
     serializer_class = PollResultSerializer
+
+
+
+def get_subcategory(request):
+    id = request.GET.get('id', '')
+    result = list(SubCategory.objects.filter(
+    Category_id=int(id)).values('id', 'Title'))
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+def get_PollOptions(request):
+    id = request.GET.get('id', '')
+    result = list(PollOption.objects.filter(
+    Poll_id=int(id)).values('id', 'optionDescription'))
+    return HttpResponse(json.dumps(result), content_type="application/json")
+

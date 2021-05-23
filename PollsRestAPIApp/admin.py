@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category,SubCategory,Poll,PollOption,PollResult,TargetedIndustry,PointingTo
+from .models import Category,SubCategory,Poll,PollOption,PollResult,TargetedIndustry,PointingTo,PollBranching
 from django.urls import path
 from django import forms
 from django.contrib import messages
@@ -18,6 +18,11 @@ admin.site.index_title = "Welecome to Pollobe"
 
 class InLinePollOptions(admin.TabularInline):
     model = PollOption
+
+class InLinePollBranching(admin.TabularInline):
+    model = PollBranching
+    fk_name = 'Poll'
+    max_num=1
 
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
@@ -190,7 +195,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
             )
 
 class Polls(admin.ModelAdmin):
-    inlines = [InLinePollOptions]
+    inlines = [InLinePollOptions,InLinePollBranching]
     list_display = ['id','Category','SubCategory','title','description','slug','isMultipleType','isActive','createdDate','modifiedDate'] 
     list_display_links = ['id']
     list_editable = ['isActive']
